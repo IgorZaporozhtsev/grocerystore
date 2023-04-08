@@ -3,6 +3,7 @@ package com.bymdev.grocerystore.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
@@ -11,17 +12,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "item_id")
+    @Column(name = "product_id")
     UUID itemId;
 
     @Column(name = "quantity")
     int quantity;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     @MapsId
     Product product;
 }

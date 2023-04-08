@@ -18,9 +18,13 @@ spring:
     database: postgresql
   liquibase:
     change-log: db/changelog/db.changelog-master.yml
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 server:
   port: 8086
 logging:
   level:
     root: info
+
 

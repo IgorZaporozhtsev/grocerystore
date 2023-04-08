@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "client_order")
-public class Order  implements Serializable {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id")
@@ -27,5 +29,7 @@ public class Order  implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id_fk")
     private List<OrderItem> orderItems;
+    @Column(name = "order_date")
+    private LocalDate orderDate = LocalDate.now();
 
 }

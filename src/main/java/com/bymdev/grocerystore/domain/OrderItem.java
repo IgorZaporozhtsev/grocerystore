@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderItem implements Serializable {
+public class OrderItem{
 
     @Id
     @Column(name = "product_id")

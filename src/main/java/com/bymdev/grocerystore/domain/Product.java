@@ -14,7 +14,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Product implements Serializable {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(name = "category")
-public class Category implements Serializable {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "category_id")

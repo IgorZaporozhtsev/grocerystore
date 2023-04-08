@@ -28,7 +28,8 @@ create table client_order
 (
     order_id     uuid not null,
     total_amount DECIMAL(10, 2),
-    primary key (order_id)
+    primary key (order_id),
+    order_date date not null default current_date
 );
 
 --changeset Ihor:1680873553

@@ -20,7 +20,7 @@ public class OrderItemController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public Page<OrderItem> getOrderItems(@PageableDefault(sort = "orderItemId", size = 5) Pageable page) {
+    public Page<OrderItem> getOrderItems(@PageableDefault(sort = "id", size = 5) Pageable page) {
         return orderItemService.getAllOrderItems(page);
     }
 

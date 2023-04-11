@@ -1,13 +1,13 @@
 package com.bymdev.grocerystore.service;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.bymdev.grocerystore.domain.Order;
 import com.bymdev.grocerystore.domain.OrderItem;
 import com.bymdev.grocerystore.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +24,15 @@ import java.util.stream.StreamSupport;
 public class OrderService {
     private final OrderRepository orderRepository;
 
+    public Page<Order> getAllOrders(Pageable page) {
+        return orderRepository.findAll(page);
+    }
+
     public Order getOrderById(Integer id) {
         return orderRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("There is no such Entity"));
     }
+
     public Order addOrder(Order order) {
         BigDecimal totalPrice = calculateOrderPrice(order);
         order.setTotalAmount(totalPrice);

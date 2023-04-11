@@ -12,8 +12,4 @@ public interface OrderElasticSearchRepository extends ElasticsearchRepository<Or
 
     @Query("{ \"nested\": { \"path\": \"orderItems\", \"query\": { \"match\": { \"orderItems.product.productName\": \"?0\" } } } }")
     List<Order> findByProductName(String productName);
-
-    @Query("{ \"nested\": { \"path\": \"orderItems\", \"query\": { \"match\": { \"orderItems.color\": \"?0\" } } } }")
-    List<Order> findByColor(String color);
-
 }

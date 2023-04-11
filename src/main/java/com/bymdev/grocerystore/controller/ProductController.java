@@ -18,11 +18,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-//    @GetMapping
-//    @ResponseStatus(code = HttpStatus.OK)
-//    public Page<Product> getProducts(@PageableDefault(sort = "productId", size = 5) Pageable page) {
-//        return productService.getAllProducts(page);
-//    }
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public Page<Product> getProducts(@PageableDefault(sort = "id", size = 5) Pageable page) {
+        return productService.getAllProducts(page);
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)

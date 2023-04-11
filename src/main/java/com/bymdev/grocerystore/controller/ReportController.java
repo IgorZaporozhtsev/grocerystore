@@ -1,8 +1,5 @@
 package com.bymdev.grocerystore.controller;
 
-//import com.bymdev.grocerystore.repository.elasticsearch.OrderElasticSearchRepository;
-//import com.bymdev.grocerystore.repository.elasticsearch.OrderElasticSearchRepository;
-
 import com.bymdev.grocerystore.domain.Order;
 import com.bymdev.grocerystore.elasticsearch.OrderElasticSearchRepository;
 import com.bymdev.grocerystore.service.OrderService;

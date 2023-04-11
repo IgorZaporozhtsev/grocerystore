@@ -1,38 +1,33 @@
 package com.bymdev.grocerystore.service;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.bymdev.grocerystore.domain.Order;
 import com.bymdev.grocerystore.domain.OrderItem;
 import com.bymdev.grocerystore.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-
     private final OrderRepository orderRepository;
 
-    public Page<Order> getAllOrders(Pageable page) {
-        return orderRepository.findAll(page);
-    }
-
-    public com.bymdev.grocerystore.domain.Order getOrderById(UUID id) {
+    public Order getOrderById(Integer id) {
         return orderRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("There is no such Entity"));
+                () -> new EntityNotFoundException("There is no such Entity"));
     }
-
-    @Transactional
     public Order addOrder(Order order) {
         BigDecimal totalPrice = calculateOrderPrice(order);
         order.setTotalAmount(totalPrice);
@@ -54,26 +49,28 @@ public class OrderService {
     }
 
     @Transactional
-    public Order updateOrder(UUID id, Order order) {
-        Order retrivedOrder = orderRepository.getReferenceById(id);
+    public Order updateOrder(Integer id, Order order) {
+        Order retrivedOrder = getOrderById(id);
         retrivedOrder.setTotalAmount(order.getTotalAmount());
         retrivedOrder.setOrderItems(order.getOrderItems());
         return orderRepository.save(retrivedOrder);
     }
 
-    public void deleteOrderById(UUID id) {
+    public void deleteOrderById(Integer id) {
         orderRepository.deleteById(id);
     }
 
     public Map<LocalDate, BigDecimal> processDallyIncome() {
-        return orderRepository.findAll().stream().collect(Collectors.groupingBy(
+        Iterable<Order> orders = orderRepository.findAll();
+
+        return StreamSupport.stream(orders.spliterator(), false)
+                .collect(Collectors.groupingBy(
                 Order::getOrderDate,
                 Collectors.mapping(
                         Order::getTotalAmount,
                         Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
         ));
     }
-
 
 
 }

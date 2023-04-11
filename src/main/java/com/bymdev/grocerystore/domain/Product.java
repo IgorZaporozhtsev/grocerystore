@@ -1,29 +1,36 @@
 package com.bymdev.grocerystore.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@Getter
-@Setter
+@Getter @Setter
+@Document(indexName = "product")
+@Table(name = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @org.springframework.data.annotation.Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Field(type = FieldType.Integer)
     @Column(name = "product_id")
-    UUID productId;
-    @Column(name = "price")
+    Integer id;
+
     BigDecimal price;
-    @Column(name = "sku")
+
     String sku;
+
     @Column(name = "product_name")
+    @Field(type = FieldType.Text, name = "productName")
     String productName;
 }

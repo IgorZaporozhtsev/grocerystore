@@ -1,35 +1,51 @@
 package com.bymdev.grocerystore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+@Document(indexName = "order")
 @Table(name = "client_order")
 public class Order {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
-    private UUID orderId;
+    @Field(type = FieldType.Integer)
+    Integer id;
+
+    @Field(type = FieldType.Text, name = "title")
+    @Column(name = "title")
+    String title;
+
+    @JsonIgnore
+    private transient String _class;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id_fk")
+    @Field(type = FieldType.Nested, includeInParent = true)
     private List<OrderItem> orderItems;
-    @Column(name = "order_date")
-    private LocalDate orderDate = LocalDate.now();
 
+    @Column(name = "order_date")
+    @Field(type = FieldType.Date)
+    private LocalDate orderDate = LocalDate.now();
 }
+
+
+

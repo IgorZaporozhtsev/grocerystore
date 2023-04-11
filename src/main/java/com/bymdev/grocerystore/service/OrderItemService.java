@@ -31,7 +31,7 @@ public class OrderItemService {
 
     @Transactional
     public OrderItem updateOrderItem(UUID id, OrderItem orderItem) {
-        OrderItem retrivedOrderItem = orderItemItemRepository.getReferenceById(id);
+        OrderItem retrivedOrderItem = getOrderItemById(id);
         retrivedOrderItem.setProduct(orderItem.getProduct());
         retrivedOrderItem.setQuantity(orderItem.getQuantity());
         return orderItemItemRepository.save(retrivedOrderItem);

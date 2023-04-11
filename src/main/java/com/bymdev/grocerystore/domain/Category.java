@@ -1,14 +1,10 @@
 package com.bymdev.grocerystore.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -20,9 +16,9 @@ import java.util.UUID;
 @Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "category_id")
-    private UUID categoryId;
+    private int categoryId;
 
     @Column(name = "category_name")
     private String name;

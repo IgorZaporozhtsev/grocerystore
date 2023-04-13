@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +20,9 @@ public class CategoryService {
         return categoryRepository.findAll(page);
     }
 
-    public Category getCategoryById(UUID id) {
+    public Category getCategoryById(Integer id) {
         return categoryRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("There is no such Entity"));
+                () -> new EntityNotFoundException("There is no such Entity"));
     }
 
     public Category addCategory(Category category) {
@@ -31,14 +30,14 @@ public class CategoryService {
     }
 
     @Transactional
-    public Category updateCategory(UUID id, Category category) {
+    public Category updateCategory(Integer id, Category category) {
         Category retrivedCategory = categoryRepository.getReferenceById(id);
         retrivedCategory.setName(category.getName());
         retrivedCategory.setProducts(category.getProducts());
         return categoryRepository.save(retrivedCategory);
     }
 
-    public void deleteCategoryById(UUID id) {
+    public void deleteCategoryById(Integer id) {
         categoryRepository.deleteById(id);
     }
 }

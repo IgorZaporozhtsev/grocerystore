@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class OrderItemService {
@@ -20,9 +18,9 @@ public class OrderItemService {
         return orderItemItemRepository.findAll(page);
     }
 
-    public com.bymdev.grocerystore.domain.OrderItem getOrderItemById(UUID id) {
+    public com.bymdev.grocerystore.domain.OrderItem getOrderItemById(Integer id) {
         return orderItemItemRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("There is no such Entity"));
+                () -> new EntityNotFoundException("There is no such Entity"));
     }
 
     public OrderItem addOrderItem(OrderItem orderItemItem) {
@@ -30,14 +28,14 @@ public class OrderItemService {
     }
 
     @Transactional
-    public OrderItem updateOrderItem(UUID id, OrderItem orderItem) {
+    public OrderItem updateOrderItem(Integer id, OrderItem orderItem) {
         OrderItem retrivedOrderItem = getOrderItemById(id);
         retrivedOrderItem.setProduct(orderItem.getProduct());
         retrivedOrderItem.setQuantity(orderItem.getQuantity());
         return orderItemItemRepository.save(retrivedOrderItem);
     }
 
-    public void deleteOrderItemById(UUID id) {
+    public void deleteOrderItemById(Integer id) {
         orderItemItemRepository.deleteById(id);
     }
 }

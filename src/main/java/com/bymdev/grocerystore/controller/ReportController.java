@@ -30,7 +30,6 @@ public class ReportController {
 
     @GetMapping(value = "product/{name}", produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
-
     public List<Order> productNameSearch(@PathVariable String name) {
         return orderElasticSearchRepository.findByProductName(name);
     }

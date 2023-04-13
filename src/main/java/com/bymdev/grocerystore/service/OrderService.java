@@ -33,6 +33,7 @@ public class OrderService {
                 () -> new EntityNotFoundException("There is no such Entity"));
     }
 
+    @Transactional
     public Order addOrder(Order order) {
         BigDecimal totalPrice = calculateOrderPrice(order);
         order.setTotalAmount(totalPrice);
@@ -55,9 +56,10 @@ public class OrderService {
 
     @Transactional
     public Order updateOrder(Integer id, Order order) {
+        BigDecimal totalPrice = calculateOrderPrice(order);
         Order retrivedOrder = getOrderById(id);
-        retrivedOrder.setTotalAmount(order.getTotalAmount());
-        retrivedOrder.setOrderItems(order.getOrderItems());
+        retrivedOrder.setTotalAmount(totalPrice);
+        retrivedOrder.addOrderItems(order.getOrderItems());
         return orderRepository.save(retrivedOrder);
     }
 
@@ -66,7 +68,7 @@ public class OrderService {
     }
 
     public Map<LocalDate, BigDecimal> processDallyIncome() {
-        Iterable<Order> orders = orderRepository.findAll();
+        Iterable<Order> orders = orderRepository.findByOrderDate(LocalDate.now());
 
         return StreamSupport.stream(orders.spliterator(), false)
                 .collect(Collectors.groupingBy(

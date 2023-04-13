@@ -1,6 +1,7 @@
 package com.bymdev.grocerystore.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Category {
     @Column(name = "category_id")
     private int categoryId;
 
+    @NotBlank
     @Column(name = "category_name")
     private String name;
 

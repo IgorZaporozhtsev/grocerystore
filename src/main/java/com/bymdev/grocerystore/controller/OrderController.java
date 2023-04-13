@@ -2,6 +2,7 @@ package com.bymdev.grocerystore.controller;
 
 import com.bymdev.grocerystore.domain.Order;
 import com.bymdev.grocerystore.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Order addOrder(@RequestBody Order order) {
+    public Order addOrder(@RequestBody @Valid Order order) {
         var saved = orderService.addOrder(order);
         Objects.requireNonNull(saved.getId());
         var savedEl = elasticsearchOperations.save(saved);
@@ -47,7 +48,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public Order updateOrder(@PathVariable Integer id, @RequestBody Order order) {
+    public Order updateOrder(@PathVariable Integer id, @RequestBody @Valid Order order) {
         return orderService.updateOrder(id, order);
     }
 

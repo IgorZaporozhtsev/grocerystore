@@ -1,6 +1,9 @@
 package com.bymdev.grocerystore.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +26,16 @@ public class OrderItem{
     @Field(type = FieldType.Integer)
     Integer id;
 
+    @NotNull @Min(1)
     @Column(name = "quantity")
     int quantity;
 
+
+    @NotNull
+    @Valid
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    @MapsId
     @Field(type = FieldType.Object)
     Product product;
 }

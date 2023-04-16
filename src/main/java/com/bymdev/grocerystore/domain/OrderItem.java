@@ -4,15 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Entity
+@Builder
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @Document(indexName = "item")
@@ -24,11 +22,12 @@ public class OrderItem{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
     @Field(type = FieldType.Integer)
-    Integer id;
+    private Integer id;
 
-    @NotNull @Min(1)
+    @NotNull
+    @Min(1)
     @Column(name = "quantity")
-    int quantity;
+    private int quantity;
 
 
     @NotNull
@@ -37,5 +36,5 @@ public class OrderItem{
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     @Field(type = FieldType.Object)
-    Product product;
+    private Product product;
 }

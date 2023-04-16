@@ -1,6 +1,4 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true
   application:
     name: grocerystore
   datasource:
@@ -20,24 +18,6 @@ spring:
     database: postgresql
   liquibase:
     change-log: db/changelog/db.changelog-master.yml
-  jackson:
-    serialization:
-      fail-on-empty-beans: false
 server:
   port: 8085
 
-# Logging
-logging:
-  level:
-    root: DEBUG
-    com.bymdev.grocerystore: DEBUG
-
-# ELASTICSEARCH
-elasticsearch:
-  host: 127.0.0.1
-  port: 9200
-
-## SWAGGER
-springdoc:
-  swagger-ui.path: /swagger-ui.html
-  api-docs.path: /v1/api-docs

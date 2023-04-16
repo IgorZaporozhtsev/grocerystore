@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
 @Document(indexName = "order")
 @Table(name = "client_order")
@@ -27,16 +27,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
     @Field(type = FieldType.Integer)
-    Integer id;
+    private Integer id;
 
     @Field(type = FieldType.Text, name = "title")
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
-
+    @Builder.Default
     @NotEmpty
     @Valid
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

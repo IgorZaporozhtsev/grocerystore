@@ -22,6 +22,7 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository orderRepository;
 
     public Page<Order> getAllOrders(Pageable page) {

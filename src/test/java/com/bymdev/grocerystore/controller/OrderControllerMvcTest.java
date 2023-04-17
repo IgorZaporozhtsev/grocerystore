@@ -3,6 +3,7 @@ package com.bymdev.grocerystore.controller;
 import com.bymdev.grocerystore.domain.Order;
 import com.bymdev.grocerystore.domain.OrderItem;
 import com.bymdev.grocerystore.domain.Product;
+import com.bymdev.grocerystore.repository.OrderRepository;
 import com.bymdev.grocerystore.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,12 +41,15 @@ class OrderControllerMvcTest {
     @MockBean
     private OrderService service;
     @MockBean
+    private OrderRepository orderRepository;
+    @MockBean
     private ElasticsearchOperations elasticsearchOperations;
 
     private Order order;
 
     @BeforeEach
     public void initEach() {
+
         var coffee = Product.builder()
                 .id(1)
                 .price(BigDecimal.valueOf(20))
